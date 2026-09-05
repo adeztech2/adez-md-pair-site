@@ -22,7 +22,6 @@
             color: #ffffff;
         }
         
-        /* Animated Blue Background */
         body::before {
             content: '';
             position: fixed;
@@ -50,44 +49,10 @@
             margin-bottom: 20px;
         }
         
-        .logo {
-            width: 120px;
-            height: 120px;
-            margin: 0 auto;
-            background: linear-gradient(135deg, #0066ff, #0044cc);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 0 30px rgba(0, 100, 255, 0.3);
-            position: relative;
-        }
-        
-        .logo::before {
-            content: '';
-            position: absolute;
-            top: -3px;
-            left: -3px;
-            right: -3px;
-            bottom: -3px;
-            background: linear-gradient(45deg, #0066ff, #00aaff, #0066ff);
-            border-radius: 50%;
-            z-index: -1;
-            animation: glowing 2s ease infinite;
-        }
-        
-        @keyframes glowing {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.6; }
-        }
-        
-        .logo-text {
-            color: #ffffff;
-            font-size: 32px;
-            font-weight: 900;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        .logo-container img {
+            width: 180px;
+            height: auto;
+            border-radius: 10px;
         }
         
         h1 {
@@ -251,7 +216,6 @@
             text-decoration: none;
         }
         
-        /* QR Code Section */
         .qr-section {
             margin-top: 20px;
             display: none;
@@ -279,11 +243,9 @@
 </head>
 <body>
     <div class="container">
-        <!-- Custom ADEZ MD Logo -->
+        <!-- ADEZ TECH Logo -->
         <div class="logo-container">
-            <div class="logo">
-                <span class="logo-text">A</span>
-            </div>
+            <img src="YOUR_IMAGE_URL_HERE" alt="ADEZ TECH Logo">
         </div>
         
         <h1>ADEZ MD</h1>
@@ -299,7 +261,6 @@
         
         <button class="btn-primary" id="pair-btn" onclick="generatePairCode()">📱 Get Pair Code</button>
         
-        <!-- QR Code Icon Section -->
         <div class="qr-section" id="qr-section">
             <div class="qr-icon" onclick="showQRCode()" title="Show QR Code">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -370,7 +331,6 @@
                 btn.disabled = true;
                 btn.textContent = '✅ Code Generated';
                 
-                // Show QR code section
                 document.getElementById('qr-section').style.display = 'block';
                 
                 setTimeout(() => {
@@ -391,8 +351,6 @@
         }
         
         function showQRCode() {
-            // This would show the actual QR code
-            // For now, it's a placeholder
             alert('QR Code feature coming soon!');
         }
     </script>
