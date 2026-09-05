@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ADEZ MD - Pair Code Generator</title>
-    <meta name="description" content="Generate pairing code for ADEZ MD WhatsApp Bot">
     <style>
         * {
             margin: 0;
@@ -14,17 +13,16 @@
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #0a0a0a;
+            background: #000000;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
             color: #ffffff;
-            overflow-x: hidden;
         }
         
-        /* Animated Background */
+        /* Animated Blue Background */
         body::before {
             content: '';
             position: fixed;
@@ -32,416 +30,279 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at 20% 50%, rgba(0, 255, 136, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 20%, rgba(0, 255, 136, 0.05) 0%, transparent 50%);
+            background: radial-gradient(circle at 20% 50%, rgba(0, 100, 255, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(0, 150, 255, 0.1) 0%, transparent 50%);
             z-index: -1;
         }
         
         .container {
-            background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
-            border: 1px solid #333;
+            background: linear-gradient(145deg, #0a0a0a, #1a1a2e);
+            border: 1px solid #1a3a5c;
             border-radius: 20px;
             padding: 40px;
             max-width: 550px;
             width: 100%;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 60px rgba(0, 100, 255, 0.2);
             text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        /* Glowing border effect */
-        .container::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, #00ff88, #00cc6a, #00ff88);
-            border-radius: 22px;
-            z-index: -1;
-            animation: glowing 3s ease infinite;
-        }
-        
-        @keyframes glowing {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.6; }
         }
         
         .logo {
             margin-bottom: 20px;
-            position: relative;
         }
         
         .logo img {
-            width: 80px;
-            height: 80px;
-            filter: drop-shadow(0 0 20px rgba(0, 255, 136, 0.3));
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 3px solid #0066ff;
+            box-shadow: 0 0 30px rgba(0, 100, 255, 0.3);
         }
         
         h1 {
-            color: #00ff88;
-            margin-bottom: 10px;
+            color: #0066ff;
             font-size: 36px;
-            text-transform: uppercase;
             letter-spacing: 4px;
-            text-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
-            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            text-shadow: 0 0 20px rgba(0, 100, 255, 0.3);
         }
         
         .powered-by {
-            font-size: 14px;
             color: #888;
+            font-size: 13px;
             margin-bottom: 30px;
-            font-weight: 500;
         }
         
         .powered-by a {
-            color: #00ff88;
+            color: #0066ff;
             text-decoration: none;
-            font-weight: bold;
         }
         
-        .powered-by a:hover {
-            text-decoration: underline;
-        }
-        
-        p {
-            color: #aaa;
+        .status-box {
+            background: #0a0a0a;
+            border-radius: 12px;
+            padding: 20px;
             margin-bottom: 20px;
-            line-height: 1.6;
-        }
-        
-        #status {
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 20px;
-            font-weight: bold;
-            border: 1px solid #333;
-            min-height: 60px;
+            min-height: 80px;
             display: flex;
             align-items: center;
             justify-content: center;
+            border: 1px solid #1a3a5c;
         }
         
-        .loading {
-            background: #1a1a1a;
+        .status-box.loading {
             color: #888;
         }
         
-        .success {
-            background: #0d2818;
-            color: #00ff88;
-            border-color: #00ff88;
+        .status-box.success {
+            color: #0066ff;
+            border-color: #0066ff;
+            background: rgba(0, 100, 255, 0.1);
         }
         
-        .error {
-            background: #2d0a0a;
+        .status-box.error {
             color: #ff4444;
             border-color: #ff4444;
+            background: rgba(255, 68, 68, 0.1);
         }
         
-        .pair-code {
-            background: linear-gradient(145deg, #0d2818, #0a1f12);
-            border: 2px dashed #00ff88;
-            border-radius: 15px;
-            padding: 20px;
-            margin: 20px 0;
-        }
-        
-        .pair-code h3 {
-            color: #00ff88;
-            margin-bottom: 10px;
-            font-size: 18px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-        
-        .pair-code .code {
-            font-size: 40px;
-            font-weight: 900;
-            color: #ffffff;
-            letter-spacing: 6px;
-            margin: 15px 0;
-            text-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
-            font-family: 'Courier New', monospace;
-        }
-        
-        .instructions {
-            text-align: left;
-            background: #1a1a1a;
-            border-radius: 10px;
-            padding: 20px;
-            margin-top: 20px;
-            border: 1px solid #333;
-        }
-        
-        .instructions h3 {
-            margin-bottom: 10px;
-            color: #00ff88;
-            font-size: 16px;
-        }
-        
-        .instructions ol {
-            margin-left: 20px;
-            color: #aaa;
-        }
-        
-        .instructions li {
-            margin-bottom: 10px;
-            line-height: 1.5;
-        }
-        
-        button {
-            background: linear-gradient(135deg, #00ff88, #00cc6a);
-            color: #0a0a0a;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 25px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: all 0.3s;
-            width: 100%;
-            max-width: 300px;
-        }
-        
-        button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
-        }
-        
-        button:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-        
-        .refresh-btn {
-            background: #333;
-            color: #fff;
-        }
-        
-        #phone-input {
-            width: 100%;
-            padding: 12px;
+        .input-group {
             margin-bottom: 15px;
-            border: 1px solid #00ff88;
-            border-radius: 8px;
-            background: #1a1a1a;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 14px;
+            border-radius: 10px;
+            border: 1px solid #1a3a5c;
+            background: #0a0a0a;
             color: #fff;
             font-size: 14px;
             text-align: center;
         }
         
-        #phone-input:focus {
+        .input-group input:focus {
             outline: none;
-            border-color: #00ff88;
-            box-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
+            border-color: #0066ff;
+            box-shadow: 0 0 10px rgba(0, 100, 255, 0.3);
         }
         
-        #phone-input::placeholder {
-            color: #666;
-        }
-        
-        .copy-btn {
-            background: #00ff88;
-            color: #0a0a0a;
+        .btn-primary {
+            width: 100%;
+            padding: 14px;
             border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-size: 14px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #0066ff, #0044cc);
+            color: #ffffff;
+            font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 10px;
-            width: auto;
             transition: all 0.3s;
         }
         
-        .copy-btn:hover {
-            background: #00cc6a;
-            box-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 30px rgba(0, 100, 255, 0.4);
         }
         
-        .qr-container {
-            background: white;
-            border-radius: 10px;
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .pair-code-display {
+            background: rgba(0, 100, 255, 0.05);
+            border: 2px dashed #0066ff;
+            border-radius: 12px;
             padding: 20px;
-            margin: 15px 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            margin-top: 20px;
+            display: none;
         }
         
-        .qr-container img {
-            width: 250px;
-            height: 250px;
-            object-fit: contain;
+        .pair-code-display h3 {
+            color: #0066ff;
+            margin-bottom: 10px;
+        }
+        
+        .pair-code-display .code {
+            font-size: 36px;
+            font-weight: 900;
+            letter-spacing: 5px;
+            color: #fff;
+            margin: 10px 0;
+        }
+        
+        .copy-btn {
+            background: #0066ff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        
+        .instructions {
+            text-align: left;
+            background: #0a0a0a;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            border: 1px solid #1a3a5c;
+        }
+        
+        .instructions h3 {
+            color: #0066ff;
+            margin-bottom: 10px;
+        }
+        
+        .instructions ol {
+            padding-left: 20px;
+            color: #aaa;
+        }
+        
+        .instructions li {
+            margin-bottom: 8px;
         }
         
         .footer {
             margin-top: 30px;
             padding-top: 20px;
-            border-top: 1px solid #333;
+            border-top: 1px solid #1a3a5c;
             font-size: 12px;
             color: #666;
         }
         
         .footer a {
-            color: #00ff88;
+            color: #0066ff;
             text-decoration: none;
-        }
-        
-        .loading-spinner {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid #333;
-            border-top: 3px solid #00ff88;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-right: 10px;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        /* Mobile Responsive */
-        @media (max-width: 600px) {
-            .container {
-                padding: 20px;
-            }
-            
-            h1 {
-                font-size: 24px;
-            }
-            
-            .pair-code .code {
-                font-size: 32px;
-                letter-spacing: 4px;
-            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="logo">
-            <!-- WhatsApp SVG Icon -->
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="80" height="80" fill="#00ff88">
+            <!-- WhatsApp Blue Logo -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="100" height="100" fill="#0066ff">
                 <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
             </svg>
         </div>
         
         <h1>ADEZ MD</h1>
         <div class="powered-by">Powered by <a href="https://github.com/adeztech2">ADEZ TECH</a></div>
-        <p>Generate your pairing code to connect the bot</p>
         
-        <!-- Status -->
-        <div id="status" class="loading">
-            <p><span class="loading-spinner"></span>Ready to generate...</p>
+        <div class="status-box loading" id="status">
+            <p>Ready to generate pair code...</p>
         </div>
         
-        <!-- QR Code Section -->
-        <div id="qr-section" style="display: none;">
-            <div class="pair-code">
-                <h3>📱 Scan QR Code</h3>
-                <p>Scan this QR code with WhatsApp:</p>
-                <div class="qr-container">
-                    <img id="qr-display" alt="QR Code">
-                </div>
-                <p style="color: #00ff88; font-weight: bold;">Open WhatsApp > Settings > Linked Devices > Link a Device</p>
-            </div>
+        <div class="input-group">
+            <input type="tel" id="phone-input" placeholder="Enter WhatsApp number (e.g., 254712345678)">
         </div>
         
-        <!-- Pair Code Section -->
-        <div id="pair-code-section" style="display: none;">
-            <div class="pair-code">
-                <h3>📱 Your Pairing Code</h3>
-                <p>Enter this code in WhatsApp:</p>
-                <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
-                    <div class="code" id="pair-code">Loading...</div>
-                    <button class="copy-btn" onclick="copyCode()" id="copy-btn">📋</button>
-                </div>
-                <p style="color: #00ff88; font-weight: bold; margin-top: 10px;">Valid for 60 seconds</p>
-            </div>
+        <button class="btn-primary" id="pair-btn" onclick="generatePairCode()">📱 Get Pair Code</button>
+        
+        <div class="pair-code-display" id="pair-code-display">
+            <h3>📱 Your Pairing Code</h3>
+            <div class="code" id="pair-code">Loading...</div>
+            <button class="copy-btn" onclick="copyCode()">📋 Copy Code</button>
+            <p style="color: #0066ff; font-size: 12px; margin-top: 10px;">Valid for 60 seconds</p>
         </div>
         
-        <!-- Instructions -->
         <div class="instructions">
             <h3>📖 How to connect:</h3>
             <ol>
-                <li>Enter your WhatsApp number below</li>
+                <li>Enter your WhatsApp number</li>
                 <li>Click "Get Pair Code"</li>
                 <li>Copy the code</li>
                 <li>Open WhatsApp > Settings > Linked Devices</li>
                 <li>Tap "Link with Phone Number"</li>
                 <li>Enter the code</li>
-                <li>Wait for bot to connect!</li>
             </ol>
         </div>
         
-        <!-- Phone Input -->
-        <input type="tel" id="phone-input" placeholder="Enter WhatsApp number (e.g., 254712345678)">
-        <button id="pair-code-btn" onclick="getPairCode()">📱 Get Pair Code</button>
-        <button class="refresh-btn" onclick="window.location.reload()" style="display: none;" id="refresh-btn">🔄 Refresh Page</button>
-        
-        <!-- Footer -->
         <div class="footer">
             <p>© 2026 <a href="https://github.com/adeztech2">ADEZ TECH</a> | All Rights Reserved</p>
-            <p>ADEZ MD - Advanced WhatsApp Bot</p>
         </div>
     </div>
-
+    
     <script>
-        // Simulate generating pair code (this is a demo)
-        function getPairCode() {
+        function generatePairCode() {
             const phoneInput = document.getElementById('phone-input');
+            const status = document.getElementById('status');
+            const btn = document.getElementById('pair-btn');
             const phoneNumber = phoneInput.value.trim();
-            const statusDiv = document.getElementById('status');
-            const pairCodeBtn = document.getElementById('pair-code-btn');
             
             if (!phoneNumber) {
-                statusDiv.innerHTML = '<p style="color: #ff4444;">⚠️ Please enter your WhatsApp number!</p>';
-                statusDiv.className = 'error';
+                status.innerHTML = '⚠️ Please enter your WhatsApp number!';
+                status.className = 'status-box error';
                 return;
             }
             
-            // Validate phone number
             const cleanedNumber = phoneNumber.replace(/[^0-9]/g, '');
             if (cleanedNumber.length < 10) {
-                statusDiv.innerHTML = '<p style="color: #ff4444;">⚠️ Invalid number! Use country code + number (e.g., 254712345678)</p>';
-                statusDiv.className = 'error';
+                status.innerHTML = '⚠️ Invalid number! Use country code + number (e.g., 254712345678)';
+                status.className = 'status-box error';
                 return;
             }
             
-            // Simulate generating
-            pairCodeBtn.disabled = true;
-            pairCodeBtn.textContent = '⏳ Generating...';
-            statusDiv.innerHTML = '<p><span class="loading-spinner"></span>Generating pair code...</p>';
-            statusDiv.className = 'loading';
+            btn.disabled = true;
+            btn.textContent = '⏳ Generating...';
+            status.innerHTML = '⏳ Generating pair code...';
+            status.className = 'status-box loading';
             
-            // Simulate delay
             setTimeout(() => {
-                // Generate random 8-digit code
                 const code = Math.floor(10000000 + Math.random() * 90000000);
                 
-                // Show the code
-                document.getElementById('pair-code-section').style.display = 'block';
+                document.getElementById('pair-code-display').style.display = 'block';
                 document.getElementById('pair-code').textContent = code;
-                document.getElementById('copy-btn').style.display = 'inline-block';
-                document.getElementById('refresh-btn').style.display = 'block';
                 
-                statusDiv.innerHTML = '<p style="color: #00ff88;">✅ Pair code generated!</p>';
-                statusDiv.className = 'success';
+                status.innerHTML = '✅ Pair code generated!';
+                status.className = 'status-box success';
                 
-                pairCodeBtn.disabled = true;
-                pairCodeBtn.textContent = '✅ Code Generated';
+                btn.disabled = true;
+                btn.textContent = '✅ Code Generated';
                 
-                // Show alert
                 setTimeout(() => {
                     alert(`Your Pair Code is: ${code}\n\nEnter this in WhatsApp > Settings > Linked Devices > Link with Phone Number`);
                 }, 1000);
@@ -451,30 +312,10 @@
         function copyCode() {
             const code = document.getElementById('pair-code').textContent;
             navigator.clipboard.writeText(code).then(() => {
-                const copyBtn = document.getElementById('copy-btn');
-                copyBtn.textContent = '✅';
-                copyBtn.style.background = '#00cc6a';
-                
+                const btn = document.querySelector('.copy-btn');
+                btn.textContent = '✅ Copied!';
                 setTimeout(() => {
-                    copyBtn.textContent = '📋';
-                    copyBtn.style.background = '#00ff88';
-                }, 2000);
-            }).catch(err => {
-                console.error('Failed to copy:', err);
-                const textarea = document.createElement('textarea');
-                textarea.value = code;
-                document.body.appendChild(textarea);
-                textarea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textarea);
-                
-                const copyBtn = document.getElementById('copy-btn');
-                copyBtn.textContent = '✅';
-                copyBtn.style.background = '#00cc6a';
-                
-                setTimeout(() => {
-                    copyBtn.textContent = '📋';
-                    copyBtn.style.background = '#00ff88';
+                    btn.textContent = '📋 Copy Code';
                 }, 2000);
             });
         }
